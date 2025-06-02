@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.security.Principal
 
-@Controller("/api/paycheck")
+@Controller("/paycheck")
 class PaycheckController(
     private val paycheckService: PaycheckService
 ) {
-    @GetMapping("/balnce")
+    @GetMapping("/balance")
     fun getBalance(principal: Principal): ResponseEntity<Any> {
         return paycheckService.getDriverBalance(principal.name).let { result ->
             if (result.isSuccess()) {
