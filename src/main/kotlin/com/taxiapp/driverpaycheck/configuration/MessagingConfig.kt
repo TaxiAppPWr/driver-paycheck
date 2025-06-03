@@ -38,7 +38,7 @@ open class MessagingConfig {
 
     @Bean
     open fun driverPaycheckQueue(): Queue {
-        return QueueBuilder.durable(driverPaycheckQueueName).build()
+        return QueueBuilder.durable("driver-paycheck").build()
     }
 
     @Bean

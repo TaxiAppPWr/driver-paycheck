@@ -22,7 +22,7 @@ class OperationHistoryEntity(
     var amount: Double,
 
     @Column
-    var currency: Currency = Currency.EUR,
+    var currency: Currency = Currency.PLN,
 
     @Column
     var operationType: OperationType,

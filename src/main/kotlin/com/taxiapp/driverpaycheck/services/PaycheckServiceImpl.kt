@@ -7,22 +7,25 @@ import com.taxiapp.driverpaycheck.dto.response.HistoryTO
 import com.taxiapp.driverpaycheck.dto.response.ResultInterface
 import com.taxiapp.driverpaycheck.dto.response.ResultTO
 import com.taxiapp.driverpaycheck.entity.BalanceEntity
+import com.taxiapp.driverpaycheck.entity.Currency
 import com.taxiapp.driverpaycheck.entity.OperationHistoryEntity
 import com.taxiapp.driverpaycheck.entity.OperationType
 import com.taxiapp.driverpaycheck.repository.BalanceRepository
 import com.taxiapp.driverpaycheck.repository.OperationHistoryRepository
 import jakarta.transaction.Transactional
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import java.util.Date
 
 @Service
 open class PaycheckServiceImpl(
     private val balanceRepository: BalanceRepository,
     private val operationHistoryRepository: OperationHistoryRepository
 ) : PaycheckService {
-
+    private val logger = LoggerFactory.getLogger(PaycheckServiceImpl::class.java)
     @Value("\${api.page.size}")
     private var pageSize: Int = 0
 
@@ -84,18 +87,21 @@ open class PaycheckServiceImpl(
             "Balance not found for driver: $driverUsername"
         }
 
+        val driverEarnings = event.driverEarning.toDouble() / 100
+
         val operationHistory = OperationHistoryEntity(
             driverUsername = driverUsername,
-            amount = event.driverEarning,
-            currency = event.currency,
+            amount = driverEarnings,
+            currency = Currency.PLN,
             operationType = OperationType.EARNING,
-            date = event.endDate
+            date = Date.from(event.endTime.toInstant())
         )
         operationHistoryRepository.save(operationHistory)
 
         balanceRepository.addAmountToDriverBalance(
             driverUsername = driverUsername,
-            amount = event.driverEarning
+            amount = driverEarnings
         )
+        logger.info("Ride finished for $driverUsername. Added $driverEarnings to driver balance.")
     }
 }
