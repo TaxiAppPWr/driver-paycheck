@@ -5,7 +5,7 @@ import java.util.Date
 
 @Entity(name = "operation_history")
 @Table(indexes = [
-    Index(columnList = "driverUsername", unique = true)
+    Index(columnList = "driverUsername")
 ])
 class OperationHistoryEntity(
     @Id
