@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 
-@RabbitListener(queues = ["\${rabbit.queue.driver-paycheck.name}"])
+@RabbitListener(queues = ["driver-paycheck"])
 @Component
 class PaycheckMessageReceiver(
     private val paycheckService: PaycheckService

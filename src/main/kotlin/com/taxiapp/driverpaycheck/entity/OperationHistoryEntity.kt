@@ -5,7 +5,7 @@ import java.util.Date
 
 @Entity(name = "operation_history")
 @Table(indexes = [
-    Index(columnList = "driverUsername", unique = true)
+    Index(columnList = "driverUsername")
 ])
 class OperationHistoryEntity(
     @Id
@@ -22,7 +22,7 @@ class OperationHistoryEntity(
     var amount: Double,
 
     @Column
-    var currency: Currency = Currency.EUR,
+    var currency: Currency = Currency.PLN,
 
     @Column
     var operationType: OperationType,
