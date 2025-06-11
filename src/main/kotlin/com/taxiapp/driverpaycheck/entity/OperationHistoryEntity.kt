@@ -13,19 +13,19 @@ class OperationHistoryEntity(
     var id: Long = 0,
 
     @Column
-    var driverUsername: String,
+    var driverUsername: String = "",
 
     @Column
-    var date: Date,
+    var date: Date = Date(),
 
     @Column
-    var amount: Double,
+    var amount: Double = 0.0,
 
     @Column
     var currency: Currency = Currency.PLN,
 
     @Column
-    var operationType: OperationType,
+    var operationType: OperationType = OperationType.EARNING,
 
     @Column(nullable = true)
     var rideId: Long? = null

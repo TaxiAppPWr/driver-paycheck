@@ -12,10 +12,10 @@ class BalanceEntity(
     var id: Long = 0,
 
     @Column(unique = true)
-    var driverUsername: String,
+    var driverUsername: String = "",
 
     @Column
-    var amount: Double,
+    var amount: Double = 0.0,
 
     @Column
     var currency: Currency = Currency.PLN,
